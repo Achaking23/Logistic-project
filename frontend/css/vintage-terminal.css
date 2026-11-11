@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+    --phosphor-green: #33ff00;
+    --bg-color: #050505;
+    --bg-panel: rgba(8, 16, 8, 0.92);
+    --danger: #ff5555;
+    --accent: #98ff98;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--bg-color);
+    font-family: 'VT323', monospace;
+    color: var(--phosphor-green);
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.35) 100%);
+    mix-blend-mode: multiply;
+}
+
+.crt-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+    background-size: 100% 2px, 3px 100%;
+    text-shadow: 0 0 4px rgba(51, 255, 0, 0.5);
+}
+
+.terminal-header,
+.terminal-toolbar,
+.terminal-input-area {
+    background: var(--bg-panel);
+    border: 1px solid rgba(51, 255, 0, 0.3);
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-size: 1.2rem;
+}
+
+.terminal-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+}
+
+.upload-button,
+button,
+select {
+    font-family: inherit;
+    font-size: 1.1rem;
+    color: var(--phosphor-green);
+    background: transparent;
+    border: 1px solid rgba(51, 255, 0, 0.5);
+    padding: 6px 10px;
+}
+
+.upload-button,
+button {
+    cursor: pointer;
+}
+
+button:hover,
+.upload-button:hover,
+select:hover {
+    background: rgba(51, 255, 0, 0.08);
+}
+
+#file-upload {
+    display: none;
+}
+
+select {
+    min-width: 240px;
+    outline: none;
+}
+
+.terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-size: 1.28rem;
+    padding: 14px;
+    background: rgba(3, 8, 3, 0.9);
+    border: 1px solid rgba(51, 255, 0, 0.3);
+}
+
+.message {
+    white-space: pre-wrap;
+    line-height: 1.3;
+}
+
+.user-msg {
+    color: var(--accent);
+}
+
+.system-msg {
+    color: var(--phosphor-green);
+}
+
+.error-msg {
+    color: var(--danger);
+}
+
+.terminal-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 12px 14px;
+    font-size: 1.3rem;
+}
+
+.prompt {
+    flex-shrink: 0;
+}
+
+input[type="text"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--phosphor-green);
+    font-family: inherit;
+    font-size: 1.3rem;
+    outline: none;
+    text-shadow: inherit;
+}
+
+input[type="text"]::placeholder {
+    color: rgba(51, 255, 0, 0.55);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(51, 255, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    .crt-screen {
+        padding: 10px;
+    }
+
+    .terminal-header,
+    .terminal-toolbar,
+    .terminal-input-area,
+    .terminal-body {
+        font-size: 1rem;
+    }
+
+    .terminal-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRADITIO NIGER - Système Logistique</title>
+    <link rel="stylesheet" href="css/vintage-terminal.css">
+</head>
+<body>
+    <div class="crt-screen">
+        <div class="terminal-header">
+            <span>LOGIS-OS v1.0 [Système de Conformité Documentaire]</span>
+            <span id="system-status">Accès Autorisé</span>
+        </div>
+
+        <div class="terminal-toolbar">
+            <label class="upload-button" for="file-upload">[ Charger un PDF ]</label>
+            <input type="file" id="file-upload" accept="application/pdf">
+            <button id="refresh-docs">[ Actualiser les documents ]</button>
+            <select id="document-context">
+                <option value="all">Tous les documents</option>
+            </select>
+        </div>
+
+        <div class="terminal-body" id="chat-container">
+            <div class="message system-msg">
+                &gt; Initialisation du système... OK.<br>
+                &gt; Base de données vectorielle montée... OK.<br>
+                &gt; Prêt pour l'audit des contrats, factures et connaissements.
+            </div>
+        </div>
+
+        <div class="terminal-input-area">
+            <span class="prompt">USER_ADMIN@TRADITIO:~$</span>
+            <input type="text" id="query-input" autocomplete="off" autofocus placeholder="Posez une question de conformité...">
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
