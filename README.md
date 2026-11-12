@@ -11,6 +11,7 @@ A production-ready starter project for logistics document compliance audits usin
 - Semantic search over uploaded documents
 - Optional local LLM answer generation via Ollama
 - Vintage terminal frontend in Vanilla JS
+- One-click demo loader with bundled logistics PDFs
 - Dockerized backend + static frontend
 - Persistent storage for uploaded files and vector index
 
@@ -35,6 +36,10 @@ logistics-compliance-system/
 │   │   └── vintage-terminal.css
 │   └── js/
 │       └── app.js
+├── demo/
+│   ├── commercial_invoice_demo.pdf
+│   ├── sales_contract_demo.pdf
+│   └── bill_of_lading_demo.pdf
 ├── data/
 │   ├── chroma/
 │   └── documents/
@@ -42,6 +47,28 @@ logistics-compliance-system/
 ├── .gitignore
 └── docker-compose.yml
 ```
+
+## Demo
+
+Launch the stack and open the frontend:
+
+```bash
+docker compose up --build
+```
+
+Then:
+1. Open `http://localhost:8080`
+2. Click **Charger la démo**
+3. Try these example questions:
+   - `Quels sont les Incoterms du contrat ?`
+   - `Quelle est la date limite de livraison ?`
+   - `Quel est le montant total de la facture ?`
+   - `Le connaissement autorise-t-il une expédition partielle ?`
+
+The backend loads 3 sample logistics documents:
+- sales contract
+- commercial invoice
+- bill of lading
 
 ## API
 
@@ -66,6 +93,9 @@ Multipart form-data:
 
 ### List indexed documents
 `GET /api/v1/documents`
+
+### Load demo documents
+`POST /api/v1/demo/load`
 
 ## Local development
 
@@ -101,6 +131,7 @@ Copy `.env.example` to `.env` if desired.
 - `DATA_DIR`
 - `DOCUMENTS_DIR`
 - `CHROMA_DIR`
+- `DEMO_DIR`
 - `COLLECTION_NAME`
 - `EMBEDDING_MODEL`
 - `TOP_K_RESULTS`

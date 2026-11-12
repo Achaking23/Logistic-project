@@ -45,7 +45,8 @@ body::before {
 
 .terminal-header,
 .terminal-toolbar,
-.terminal-input-area {
+.terminal-input-area,
+.demo-hints {
     background: var(--bg-panel);
     border: 1px solid rgba(51, 255, 0, 0.3);
 }
@@ -65,7 +66,24 @@ body::before {
     align-items: center;
     gap: 10px;
     padding: 10px 14px;
+    margin-bottom: 10px;
+}
+
+.demo-hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
     margin-bottom: 14px;
+    padding: 10px 14px;
+    font-size: 1.05rem;
+}
+
+.demo-hints code {
+    border: 1px solid rgba(51, 255, 0, 0.35);
+    padding: 2px 8px;
+    background: rgba(51, 255, 0, 0.04);
+    color: var(--accent);
 }
 
 .upload-button,
@@ -172,7 +190,8 @@ input[type="text"]::placeholder {
     .terminal-header,
     .terminal-toolbar,
     .terminal-input-area,
-    .terminal-body {
+    .terminal-body,
+    .demo-hints {
         font-size: 1rem;
     }
 

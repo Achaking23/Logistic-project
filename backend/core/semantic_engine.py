@@ -29,7 +29,7 @@ def index_document_chunks(document_id: str, original_filename: str, storage_path
         for chunk in chunks
     ]
 
-    _collection.add(ids=ids, embeddings=embeddings, metadatas=metadatas, documents=texts)
+    _collection.upsert(ids=ids, embeddings=embeddings, metadatas=metadatas, documents=texts)
 
 
 def list_indexed_documents() -> List[Dict[str, Any]]:
@@ -48,7 +48,7 @@ def list_indexed_documents() -> List[Dict[str, Any]]:
         record["storage_path"] = metadata.get("storage_path")
         record["chunks"] += 1
 
-    return list(grouped.values())
+    return sorted(grouped.values(), key=lambda item: item["filename"] or "")
 
 
 def process_query(query: str, document_context: str = "all") -> Dict[str, Any]:

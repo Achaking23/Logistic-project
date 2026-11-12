@@ -1,4 +1,5 @@
 import re
+import shutil
 import uuid
 from pathlib import Path
 from typing import List, Dict
@@ -31,7 +32,31 @@ async def ingest_document(file: UploadFile) -> Dict:
         raise ValueError("Le fichier est vide.")
 
     storage_path.write_bytes(content)
+    return ingest_stored_pdf(storage_path=storage_path, original_filename=filename, document_id=document_id)
 
+
+def load_demo_documents() -> List[Dict]:
+    demo_files = sorted(settings.demo_path.glob('*.pdf'))
+    if not demo_files:
+        raise ValueError("Aucun document de démonstration n'a été trouvé.")
+
+    loaded = []
+    for demo_file in demo_files:
+        original_filename = sanitize_filename(demo_file.name)
+        document_id = f"demo-{demo_file.stem.lower().replace(' ', '-') }"
+        storage_path = settings.documents_path / f"{document_id}_{original_filename}"
+        shutil.copyfile(demo_file, storage_path)
+        loaded.append(
+            ingest_stored_pdf(
+                storage_path=storage_path,
+                original_filename=original_filename,
+                document_id=document_id,
+            )
+        )
+    return loaded
+
+
+def ingest_stored_pdf(storage_path: Path, original_filename: str, document_id: str) -> Dict:
     extracted_text = extract_text_from_pdf(storage_path)
     if len(extracted_text.strip()) < 50:
         raise ValueError("Impossible d'extraire suffisamment de texte du PDF.")
@@ -39,14 +64,14 @@ async def ingest_document(file: UploadFile) -> Dict:
     chunks = chunk_text(extracted_text, CHUNK_SIZE, CHUNK_OVERLAP)
     index_document_chunks(
         document_id=document_id,
-        original_filename=filename,
+        original_filename=original_filename,
         storage_path=str(storage_path),
         chunks=chunks,
     )
 
     return {
         "document_id": document_id,
-        "filename": filename,
+        "filename": original_filename,
         "stored_at": str(storage_path),
         "chunks_indexed": len(chunks),
         "characters_extracted": len(extracted_text),

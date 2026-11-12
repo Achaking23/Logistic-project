@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from core.config import settings
-from core.document_parser import ingest_document
+from core.document_parser import ingest_document, load_demo_documents
 from core.semantic_engine import process_query, list_indexed_documents
 
 app = FastAPI(
@@ -39,6 +39,26 @@ def health_check():
 def get_documents():
     try:
         return {"status": "success", "documents": list_indexed_documents()}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
+@app.post("/api/v1/demo/load")
+def load_demo():
+    try:
+        loaded = load_demo_documents()
+        return {
+            "status": "success",
+            "message": "Documents de démonstration chargés avec succès.",
+            "documents": loaded,
+            "count": len(loaded),
+            "sample_queries": [
+                "Quels sont les Incoterms du contrat ?",
+                "Quelle est la date limite de livraison ?",
+                "Quel est le montant total de la facture ?",
+                "Le connaissement indique-t-il une expédition partielle autorisée ?",
+            ],
+        }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc))
 

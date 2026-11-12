@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputField = document.getElementById('query-input');
     const uploadInput = document.getElementById('file-upload');
     const refreshDocsBtn = document.getElementById('refresh-docs');
+    const loadDemoBtn = document.getElementById('load-demo');
     const documentContext = document.getElementById('document-context');
     const systemStatus = document.getElementById('system-status');
 
@@ -75,6 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(loaderId)?.classList.add('error-msg');
         } finally {
             uploadInput.value = '';
+        }
+    });
+
+    loadDemoBtn.addEventListener('click', async () => {
+        const loaderId = appendMessage('system', 'Chargement de la démonstration en cours...');
+        try {
+            const response = await fetch(`${API_BASE}/demo/load`, { method: 'POST' });
+            if (!response.ok) {
+                const errorData = await safeJson(response);
+                throw new Error(errorData?.detail || 'Impossible de charger la démonstration.');
+            }
+            const data = await response.json();
+            const queries = (data.sample_queries || []).map((item) => `- ${escapeHtml(item)}`).join('<br>');
+            updateMessage(loaderId, `[DEMO OK] ${data.count} documents chargés.<br><br>[ESSAIS CONSEILLÉS]<br>${queries}`);
+            await loadDocuments();
+        } catch (error) {
+            updateMessage(loaderId, `[ERREUR DEMO] : ${escapeHtml(error.message)}`);
+            document.getElementById(loaderId)?.classList.add('error-msg');
         }
     });
 

@@ -16,10 +16,19 @@
         <div class="terminal-toolbar">
             <label class="upload-button" for="file-upload">[ Charger un PDF ]</label>
             <input type="file" id="file-upload" accept="application/pdf">
+            <button id="load-demo">[ Charger la démo ]</button>
             <button id="refresh-docs">[ Actualiser les documents ]</button>
             <select id="document-context">
                 <option value="all">Tous les documents</option>
             </select>
+        </div>
+
+        <div class="demo-hints" id="demo-hints">
+            <strong>Démo rapide :</strong>
+            <span>Cliquez sur “Charger la démo”, puis essayez :</span>
+            <code>Quels sont les Incoterms du contrat ?</code>
+            <code>Quelle est la date limite de livraison ?</code>
+            <code>Quel est le montant total de la facture ?</code>
         </div>
 
         <div class="terminal-body" id="chat-container">

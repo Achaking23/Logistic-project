@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     data_dir: str = Field(default="../data", alias="DATA_DIR")
     documents_dir: str = Field(default="../data/documents", alias="DOCUMENTS_DIR")
     chroma_dir: str = Field(default="../data/chroma", alias="CHROMA_DIR")
+    demo_dir: str = Field(default="../demo", alias="DEMO_DIR")
     collection_name: str = Field(default="logistics_documents", alias="COLLECTION_NAME")
     embedding_model: str = Field(
         default="sentence-transformers/all-MiniLM-L6-v2",
@@ -42,7 +43,12 @@ class Settings(BaseSettings):
     def chroma_path(self) -> Path:
         return Path(self.chroma_dir).resolve()
 
+    @property
+    def demo_path(self) -> Path:
+        return Path(self.demo_dir).resolve()
+
 
 settings = Settings()
 settings.documents_path.mkdir(parents=True, exist_ok=True)
 settings.chroma_path.mkdir(parents=True, exist_ok=True)
+settings.demo_path.mkdir(parents=True, exist_ok=True)
